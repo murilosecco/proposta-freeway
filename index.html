@@ -24,24 +24,27 @@
     background: var(--bg);
     font-family: -apple-system, 'SF Pro Display', system-ui, sans-serif;
     color: var(--dark);
-    min-height: 100vh;
+    height: 100%;
+    height: 100dvh;
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
   }
 
   /* SLIDES */
-  .slides { width: 100%; min-height: 0; }
+  .slides {
+    width: 100%;
+    height: 100%;
+  }
   .slide {
     display: none;
+    height: 100%;
   }
   .slide.active {
     display: flex;
     flex-direction: column;
-    height: 100dvh;
-    height: 100vh; /* fallback */
-    max-height: 100dvh;
-    max-height: 100vh;
+    height: 100%;
     overflow: hidden;
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
   }
   @keyframes slideInRight {
     from { opacity: 0; transform: translateX(48px); }
@@ -140,7 +143,7 @@
 
   /* CONTENT — scrollable middle */
   .slide-body {
-    flex: 1 1 0;
+    flex: 1;
     min-height: 0;
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
@@ -149,7 +152,6 @@
     max-width: 680px;
     margin: 0 auto;
     width: 100%;
-    box-sizing: border-box;
   }
   .slide-body::-webkit-scrollbar { display: none; }
 
