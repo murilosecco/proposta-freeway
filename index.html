@@ -28,7 +28,7 @@
   }
 
   /* SLIDES */
-  .slides { width: 100%; }
+  .slides { width: 100%; min-height: 0; }
   .slide {
     display: none;
   }
@@ -138,6 +138,7 @@
   /* CONTENT — scrollable middle */
   .slide-body {
     flex: 1;
+    min-height: 0;           /* critical: lets flex item shrink below content size */
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     overscroll-behavior-y: contain;
