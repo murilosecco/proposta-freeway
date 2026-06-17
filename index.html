@@ -31,34 +31,37 @@
   .slides { width: 100%; }
   .slide {
     display: none;
-    padding: 0;
-    animation: fadeIn .4s cubic-bezier(.16,1,.3,1) both;
   }
-  .slide.active { display: block; min-height: 100dvh; }
+  .slide.active {
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+    height: 100vh; /* fallback */
+    overflow: hidden;
+    position: relative;
+  }
   @keyframes fadeIn {
     from { opacity: 0; transform: translateY(12px); }
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  /* HEADER — Liquid Glass fixed */
+  /* HEADER — Liquid Glass */
   .slide-header {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
+    flex-shrink: 0;
+    z-index: 10;
     background: linear-gradient(
       160deg,
-      rgba(255,255,255,0.55) 0%,
-      rgba(255,255,255,0.28) 40%,
-      rgba(255,255,255,0.18) 100%
+      rgba(238,238,232,0.82) 0%,
+      rgba(238,238,232,0.55) 50%,
+      rgba(238,238,232,0.38) 100%
     );
-    -webkit-backdrop-filter: blur(32px) saturate(200%) brightness(1.08);
-    backdrop-filter: blur(32px) saturate(200%) brightness(1.08);
-    border-bottom: 1px solid rgba(255,255,255,0.6);
+    -webkit-backdrop-filter: blur(28px) saturate(180%) brightness(1.05);
+    backdrop-filter: blur(28px) saturate(180%) brightness(1.05);
+    border-bottom: 1px solid rgba(255,255,255,0.7);
     box-shadow:
-      inset 0 1px 0 rgba(255,255,255,0.75),
-      inset 0 -1px 0 rgba(255,255,255,0.15),
+      inset 0 1px 0 rgba(255,255,255,0.9),
       0 1px 0 rgba(0,0,0,0.04),
-      0 4px 24px rgba(0,0,0,0.06);
+      0 2px 16px rgba(0,0,0,0.05);
     padding: 14px 28px;
     display: flex;
     align-items: center;
@@ -78,11 +81,10 @@
 
   /* PROGRESS BAR */
   .progress-bar {
-    position: fixed;
-    top: 65px; left: 0; right: 0;
     height: 3px;
     background: var(--surface2);
-    z-index: 99;
+    flex-shrink: 0;
+    z-index: 10;
   }
   .progress-fill {
     height: 100%;
@@ -90,40 +92,43 @@
     transition: width .4s cubic-bezier(.16,1,.3,1);
   }
 
-  /* CONTENT */
+  /* CONTENT — scrollable middle */
   .slide-body {
-    padding: 104px 28px 120px;
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: contain;
+    padding: 36px 28px 32px;
     display: flex;
     flex-direction: column;
     max-width: 680px;
     margin: 0 auto;
     width: 100%;
   }
+  .slide-body::-webkit-scrollbar { display: none; }
 
-  /* FOOTER NAV — Liquid Glass fixed */
+  /* FOOTER NAV — Liquid Glass */
   .slide-footer {
-    position: fixed;
-    bottom: 0; left: 0; right: 0;
-    z-index: 100;
-    padding: 20px 28px;
-    padding-bottom: max(20px, env(safe-area-inset-bottom));
+    flex-shrink: 0;
+    z-index: 10;
+    padding: 16px 28px;
+    padding-bottom: max(16px, env(safe-area-inset-bottom));
     display: flex;
     align-items: center;
     justify-content: space-between;
     background: linear-gradient(
       0deg,
-      rgba(255,255,255,0.58) 0%,
-      rgba(255,255,255,0.28) 60%,
-      rgba(255,255,255,0.16) 100%
+      rgba(238,238,232,0.88) 0%,
+      rgba(238,238,232,0.55) 60%,
+      rgba(238,238,232,0.32) 100%
     );
-    -webkit-backdrop-filter: blur(32px) saturate(200%) brightness(1.08);
-    backdrop-filter: blur(32px) saturate(200%) brightness(1.08);
-    border-top: 1px solid rgba(255,255,255,0.6);
+    -webkit-backdrop-filter: blur(28px) saturate(180%) brightness(1.05);
+    backdrop-filter: blur(28px) saturate(180%) brightness(1.05);
+    border-top: 1px solid rgba(255,255,255,0.7);
     box-shadow:
-      inset 0 1px 0 rgba(255,255,255,0.75),
-      inset 0 -1px 0 rgba(255,255,255,0.1),
+      inset 0 1px 0 rgba(255,255,255,0.9),
       0 -1px 0 rgba(0,0,0,0.04),
-      0 -4px 24px rgba(0,0,0,0.06);
+      0 -2px 16px rgba(0,0,0,0.05);
   }
   .btn {
     border: none; cursor: pointer;
