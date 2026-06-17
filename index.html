@@ -40,17 +40,28 @@
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  /* HEADER */
+  /* HEADER — Liquid Glass */
   .slide-header {
-    background: rgba(255,255,255,0.72);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    backdrop-filter: blur(20px) saturate(180%);
-    border-bottom: 1.5px solid rgba(255,255,255,0.45);
+    background: linear-gradient(
+      160deg,
+      rgba(255,255,255,0.55) 0%,
+      rgba(255,255,255,0.28) 40%,
+      rgba(255,255,255,0.18) 100%
+    );
+    -webkit-backdrop-filter: blur(32px) saturate(200%) brightness(1.08);
+    backdrop-filter: blur(32px) saturate(200%) brightness(1.08);
+    border-bottom: 1px solid rgba(255,255,255,0.6);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.75),
+      inset 0 -1px 0 rgba(255,255,255,0.15),
+      0 1px 0 rgba(0,0,0,0.04),
+      0 4px 24px rgba(0,0,0,0.06);
     padding: 14px 28px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     flex-shrink: 0;
+    position: relative;
   }
 
   .slide-label {
@@ -91,17 +102,28 @@
   }
   .slide-body::-webkit-scrollbar { display: none; }
 
-  /* FOOTER NAV */
+  /* FOOTER NAV — Liquid Glass */
   .slide-footer {
     padding: 20px 28px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-top: 1.5px solid rgba(255,255,255,0.45);
-    background: rgba(255,255,255,0.72);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    backdrop-filter: blur(20px) saturate(180%);
+    background: linear-gradient(
+      0deg,
+      rgba(255,255,255,0.58) 0%,
+      rgba(255,255,255,0.28) 60%,
+      rgba(255,255,255,0.16) 100%
+    );
+    -webkit-backdrop-filter: blur(32px) saturate(200%) brightness(1.08);
+    backdrop-filter: blur(32px) saturate(200%) brightness(1.08);
+    border-top: 1px solid rgba(255,255,255,0.6);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.75),
+      inset 0 -1px 0 rgba(255,255,255,0.1),
+      0 -1px 0 rgba(0,0,0,0.04),
+      0 -4px 24px rgba(0,0,0,0.06);
     flex-shrink: 0;
+    position: relative;
   }
   .btn {
     border: none; cursor: pointer;
