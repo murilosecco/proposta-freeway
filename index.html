@@ -34,14 +34,17 @@
     padding: 0;
     animation: fadeIn .4s cubic-bezier(.16,1,.3,1) both;
   }
-  .slide.active { display: flex; flex-direction: column; height: 100dvh; overflow: hidden; }
+  .slide.active { display: block; min-height: 100dvh; }
   @keyframes fadeIn {
     from { opacity: 0; transform: translateY(12px); }
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  /* HEADER — Liquid Glass */
+  /* HEADER — Liquid Glass fixed */
   .slide-header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
     background: linear-gradient(
       160deg,
       rgba(255,255,255,0.55) 0%,
@@ -60,8 +63,6 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    flex-shrink: 0;
-    position: relative;
   }
 
   .slide-label {
@@ -77,9 +78,11 @@
 
   /* PROGRESS BAR */
   .progress-bar {
+    position: fixed;
+    top: 65px; left: 0; right: 0;
     height: 3px;
     background: var(--surface2);
-    flex-shrink: 0;
+    z-index: 99;
   }
   .progress-fill {
     height: 100%;
@@ -89,22 +92,21 @@
 
   /* CONTENT */
   .slide-body {
-    flex: 1;
-    padding: 36px 28px 24px;
+    padding: 104px 28px 120px;
     display: flex;
     flex-direction: column;
     max-width: 680px;
     margin: 0 auto;
     width: 100%;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior: contain;
   }
-  .slide-body::-webkit-scrollbar { display: none; }
 
-  /* FOOTER NAV — Liquid Glass */
+  /* FOOTER NAV — Liquid Glass fixed */
   .slide-footer {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    z-index: 100;
     padding: 20px 28px;
+    padding-bottom: max(20px, env(safe-area-inset-bottom));
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -122,8 +124,6 @@
       inset 0 -1px 0 rgba(255,255,255,0.1),
       0 -1px 0 rgba(0,0,0,0.04),
       0 -4px 24px rgba(0,0,0,0.06);
-    flex-shrink: 0;
-    position: relative;
   }
   .btn {
     border: none; cursor: pointer;
