@@ -40,8 +40,16 @@
     overflow: hidden;
     position: relative;
   }
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(12px); }
+  @keyframes slideInRight {
+    from { opacity: 0; transform: translateX(32px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-32px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
     to   { opacity: 1; transform: translateY(0); }
   }
 
@@ -89,8 +97,43 @@
   .progress-fill {
     height: 100%;
     background: var(--accent);
-    transition: width .4s cubic-bezier(.16,1,.3,1);
+    transition: width .5s cubic-bezier(.16,1,.3,1);
   }
+  /* Stagger children */
+  .stagger > * {
+    animation: fadeUp .4s cubic-bezier(.16,1,.3,1) both;
+  }
+  .stagger > *:nth-child(1) { animation-delay: .05s; }
+  .stagger > *:nth-child(2) { animation-delay: .10s; }
+  .stagger > *:nth-child(3) { animation-delay: .15s; }
+  .stagger > *:nth-child(4) { animation-delay: .20s; }
+  .stagger > *:nth-child(5) { animation-delay: .25s; }
+  .stagger > *:nth-child(6) { animation-delay: .30s; }
+  /* Button press */
+  .btn { transform: scale(1); }
+  .btn:active { transform: scale(.94); transition: transform .1s; }
+  /* Card hover lift */
+  .card-surface, .card-surface2 {
+    transition: box-shadow .25s, transform .25s;
+  }
+  .card-surface:hover, .card-surface2:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(0,0,0,0.09);
+  }
+  /* Entregavel row hover */
+  .entregavel-row {
+    transition: background .2s;
+    border-radius: 12px;
+    padding-left: 8px; padding-right: 8px;
+    margin-left: -8px; margin-right: -8px;
+  }
+  .entregavel-row:hover { background: rgba(0,0,0,0.03); }
+  /* Step row hover */
+  .step-row { transition: background .2s; border-radius: 12px; padding-left:8px; padding-right:8px; margin-left:-8px; margin-right:-8px; }
+  .step-row:hover { background: rgba(0,0,0,0.03); }
+  /* Compare row hover */
+  .compare-row { transition: background .2s; border-radius: 10px; padding-left:8px; padding-right:8px; margin-left:-8px; margin-right:-8px; }
+  .compare-row:hover { background: rgba(0,0,0,0.03); }
 
   /* CONTENT — scrollable middle */
   .slide-body {
@@ -327,7 +370,7 @@
     </div>
     <div class="progress-bar"><div class="progress-fill" style="width:16.6%"></div></div>
 
-    <div class="slide-body">
+    <div class="slide-body stagger">
       <div class="capa-content">
         <div class="card-dark">
           <p class="caption accent" style="color:#7BF9DF;opacity:.75;">Parceria Dedicada · desde 2017</p>
@@ -360,7 +403,7 @@
     </div>
     <div class="progress-bar"><div class="progress-fill" style="width:33.3%"></div></div>
 
-    <div class="slide-body">
+    <div class="slide-body stagger">
       <p class="caption">O que mudou</p>
       <h2 class="heading">Uma relação que<br>vale ser retomada<br>do jeito certo.</h2>
 
@@ -405,7 +448,7 @@
     </div>
     <div class="progress-bar"><div class="progress-fill" style="width:50%"></div></div>
 
-    <div class="slide-body">
+    <div class="slide-body stagger">
       <p class="caption">Parceria Dedicada</p>
       <h2 class="heading">1 dia de produção<br>por semana.</h2>
 
@@ -467,7 +510,7 @@
     </div>
     <div class="progress-bar"><div class="progress-fill" style="width:66.6%"></div></div>
 
-    <div class="slide-body">
+    <div class="slide-body stagger">
       <p class="caption">Como funciona na prática</p>
       <h2 class="heading">Toda terça-feira,<br>output garantido.</h2>
 
@@ -520,7 +563,7 @@
     </div>
     <div class="progress-bar"><div class="progress-fill" style="width:83.3%"></div></div>
 
-    <div class="slide-body">
+    <div class="slide-body stagger">
       <p class="caption">Parceria Dedicada Mensal</p>
       <h2 class="heading">Sem surpresa.<br>Sem cotação.<br>Todo mês.</h2>
 
@@ -577,7 +620,7 @@
     </div>
     <div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>
 
-    <div class="slide-body">
+    <div class="slide-body stagger">
       <p class="caption accent">Para começar</p>
       <h2 class="heading">Três passos<br>para retomar.</h2>
 
@@ -627,10 +670,37 @@
 </div>
 
 <script>
+  let current = 1;
+
   function goTo(n) {
-    document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
-    document.getElementById('slide-' + n).classList.add('active');
-    window.scrollTo(0, 0);
+    const direction = n > current ? 'forward' : 'back';
+    const prev = document.getElementById('slide-' + current);
+    const next = document.getElementById('slide-' + n);
+
+    // Set animation direction
+    next.style.animation = 'none';
+    next.offsetHeight; // reflow
+    next.style.animation = '';
+
+    const animIn  = direction === 'forward' ? 'slideInRight' : 'slideInLeft';
+    next.style.setProperty('--slide-anim', animIn);
+
+    // Swap
+    prev.classList.remove('active');
+    next.classList.add('active');
+
+    // Re-trigger stagger on body children
+    const body = next.querySelector('.slide-body');
+    if (body) {
+      body.classList.remove('stagger');
+      body.offsetHeight;
+      body.classList.add('stagger');
+    }
+
+    // Scroll body to top
+    if (body) body.scrollTop = 0;
+
+    current = n;
   }
 </script>
 </body>
